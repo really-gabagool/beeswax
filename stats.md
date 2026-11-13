@@ -1,9 +1,9 @@
-# 📊 beeswax — full breakdown
+# beeswax - full breakdown
 
 Stats for the current release. Counts are over **unique** entries, not raw attempts.
 
 - **Passwords:** 35,585 unique
-- **Usernames:** 996 unique
+- **Usernames:** 995 unique
 
 ## Password length
 
