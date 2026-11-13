@@ -6,8 +6,6 @@
 
 Usernames and passwords captured from internet-facing SSH/Telnet honeypots, cleaned up and published as plain wordlists.
 
-![passwords](https://img.shields.io/badge/passwords-35%2C585-f5b800?style=flat-square)
-![usernames](https://img.shields.io/badge/usernames-996-f5b800?style=flat-square)
 ![source](https://img.shields.io/badge/source-Cowrie%20honeypots-222?style=flat-square)
 ![license](https://img.shields.io/badge/license-CC%20BY%204.0-222?style=flat-square)
 
@@ -17,35 +15,36 @@ Usernames and passwords captured from internet-facing SSH/Telnet honeypots, clea
 
 ## What is this?
 
-Every exposed SSH or Telnet port gets hammered around the clock by botnets guessing logins. I run [Cowrie](https://github.com/cowrie/cowrie) honeypots that let them try, and this repo holds what they tried.
+Every exposed SSH or Telnet port gets hammered around the clock by botnets guessing logins. I run [Cowrie](https://github.com/cowrie/cowrie) and various other honeypots that let them try, and this repo holds what they tried.
 
 These aren't leaked passwords and they aren't made up. They're the dictionaries attackers are using **right now**, as observed on the wire. That makes them useful for:
 
-- 🔐 **Defenders** auditing their own systems and password-block policies against what bots actually try first
-- 📊 **Researchers** tracking how attacker wordlists shift over time
-- 🍯 **Honeypot operators** comparing against their own sensors
-- 🧰 **Tool authors** who need a realistic, current corpus
+- **Defenders** auditing their own systems and password-block policies against what bots actually try first
+- **Researchers** tracking how attacker wordlists shift over time
+- **Honeypot operators** comparing against their own sensors
+- **Tool authors** who need a realistic, current corpus
 
 > Beeswax is what the hive builds the honeycomb from. If you analyze honeypot logs, see also **[HONEYCOMB](https://github.com/really-gabagool)**.
 
-## 📂 Contents
+## Contents
 
 | File | Entries | Description |
 |---|---:|---|
-| [`bot_passwords.txt`](bot_passwords.txt) | 35,585 | Every unique password attempted |
-| [`bot_usernames.txt`](bot_usernames.txt) | 996 | Every unique username attempted |
+| [`captured_passwords.txt`](captured_passwords.txt) | 35,584 | Every unique password attempted |
+| [`captured_usernames.txt`](captured_usernames.txt) | 995 | Every unique username attempted |
 
 - One entry per line, **UTF-8**, **LF** line endings, no duplicates
 - Ordered by how often each entry was tried, so the top of each file is what bots reach for first
 - Non-English entries (Cyrillic, Arabic, Korean, Chinese) are kept as real UTF-8 text, not escaped bytes
+- Suspected canaries removed
 
-## 🔬 Collection
+## Collection
 
 | | |
 |---|---|
 | **Sensors** | Cowrie (SSH + Telnet), multiple cloud VPS nodes across North America and Asia |
-| **Collection window** | `YYYY-MM-DD` → `YYYY-MM-DD` |
-| **Update cadence** | Roughly monthly, tagged by date (`2026-11`, `2026-12`, …) |
+| **Collection window** | `10/30/26` → `11/12/26` |
+| **Update cadence** | Roughly monthly, tagged by date (`11/26`, `12/26`, …) |
 
 ### Cleaning
 
@@ -57,7 +56,7 @@ Raw honeypot logs are messy. Before publishing, every list goes through:
 - **Sensor identifiers scrubbed.** Anything that could point back to the honeypots themselves.
 - **Deduplicated.**
 
-## 📊 By the numbers
+## By the numbers
 
 **Passwords**
 
@@ -76,7 +75,7 @@ The headline: nearly four out of five attempts are eight characters or shorter, 
 
 **Top 15 usernames:** `username` `admin` `root` `support` `test` `user` `ftpuser` `ubuntu` `dev` `ubnt` `data` `frappe` `demo` `pi` `kafka`
 
-## 👀 What the usernames reveal
+## What the usernames reveal
 
 The username list is small but tells a story about what attackers expect to find exposed:
 
@@ -86,7 +85,7 @@ The username list is small but tells a story about what attackers expect to find
 - **Game servers.** `minecraft`, `teamspeak` / `ts3`, `steam`, `factorio`, `palworld`, `arma3server`, `fivem`.
 - **IoT / embedded defaults.** `ubnt`, `pi`, `orangepi`, `radxa`, `odroid`, `jetson`, `AdminGPON`, `telecomadmin`, `xc3511`, `vstarcam2015`, `moxa`.
 
-## 🛡️ Using it defensively
+## Using it defensively
 
 The most useful thing here is the frequency ordering. A short prefix of each list (say the first few hundred lines) accounts for most of the attack volume, so it's a practical set to:
 
@@ -98,7 +97,7 @@ The most useful thing here is the frequency ordering. A short prefix of each lis
 
 These lists are published for **defense and research**. If you use them for security testing, only do so against systems you own or have explicit written permission to test. Unauthorized access to computer systems is illegal in most jurisdictions.
 
-## 📜 License
+## License
 
 Released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Use it however you like, just credit **beeswax by [@really-gabagool](https://github.com/really-gabagool)**.
 
