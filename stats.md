@@ -1,7 +1,5 @@
 # Beeswax — generated statistics
 
-Generated with `python tools/beeswax.py stats`. All percentages describe **unique published passwords**, not login attempts.
-
 - **Passwords:** 35,584 unique
 - **Usernames:** 995 unique
 
@@ -37,7 +35,6 @@ Median: **8** characters. Range: **1–128** characters.
 - Special means any non-alphanumeric character, including spaces. Categories overlap.
 - Values are case-sensitive. Leading/trailing spaces are preserved.
 - Unique-entry statistics cannot establish traffic shares, successful compromises, or attacker intent.
-- The existing list order is inherited; frequency counts are unavailable for this snapshot.
 
 ## File integrity
 
