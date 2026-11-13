@@ -101,7 +101,7 @@ These lists are published for **defense and research**. If you use them for secu
 
 Released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Use it however you like, just credit **beeswax by [@really-gabagool](https://github.com/really-gabagool)**.
 
-## 🤝 Related
+## Related
 
 - [Cowrie](https://github.com/cowrie/cowrie) — the SSH/Telnet honeypot behind the data
 - [SecLists](https://github.com/danielmiessler/SecLists) — the classic collection of security wordlists
