@@ -17,7 +17,7 @@ Usernames and passwords captured from various internet-facing honeypots, cleaned
 
 ## What is this?
 
-Every exposed SSH or Telnet port gets hammered around the clock by botnets guessing logins. I run [Cowrie](https://github.com/cowrie/cowrie) honeypots that let them try, and this repo holds what they tried.
+Every exposed SSH or Telnet port gets hammered around the clock by botnets guessing logins. I run [Cowrie](https://github.com/cowrie/cowrie) and various other honeypots that let them try, and this repo holds what they tried.
 
 These aren't leaked passwords and they aren't made up. They're the dictionaries attackers are using **right now**, as observed on the wire. That makes them useful for:
 
