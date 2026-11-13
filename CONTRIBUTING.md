@@ -27,3 +27,20 @@ If you do submit data, every file must stay:
 ## Reporting a problem privately
 
 If you find something sensitive that shouldn't be public (an identifier that slipped through the scrub), **don't open a public issue.** Reach out through the contact on my GitHub profile instead.
+
+## Reproducible updates
+
+Read [METHODOLOGY.md](METHODOLOGY.md) before submitting a new collection. Include collection dates/timezone, broad sensor geography, event-selection rules, and aggregate exclusions. Keep logs, exclusion files, and sensor identifiers private.
+
+Run these checks before opening a pull request:
+
+```sh
+python tools/beeswax.py validate
+python tools/beeswax.py stats
+python -m unittest discover -s tests -v
+python tools/beeswax.py stats --check
+```
+
+Preserve significant whitespace and case. Do not silently turn a guessed credential into a different string. Review byte-escape decoding and filter exclusions against source logs. Publish per-value metadata only after a privacy review; frequency order must be supported by counts for the same collection window. Never derive historical attempt counts from unique-entry lists.
+
+The current snapshot predates the new processing tool. Changes to its values require evidence from source logs; documentation/statistics corrections alone should not alter its bytes.

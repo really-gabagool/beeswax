@@ -2,109 +2,98 @@
 
 # 🐝 beeswax
 
-**Real credentials that real bots threw at real honeypots.**
+**Login guesses observed by internet-facing honeypots.**
 
-Usernames and passwords captured from various internet-facing honeypots, cleaned up and published as plain wordlists.
+A curated collection of usernames and passwords submitted to Cowrie SSH and Telnet honeypots, published for defense and research.
 
-![passwords](https://img.shields.io/badge/passwords-35%2C585-f5b800?style=flat-square)
-![usernames](https://img.shields.io/badge/usernames-996-f5b800?style=flat-square)
 ![source](https://img.shields.io/badge/source-Cowrie%20honeypots-222?style=flat-square)
 ![license](https://img.shields.io/badge/license-CC%20BY%204.0-222?style=flat-square)
 
 </div>
 
----
-
 ## What is this?
 
-Every exposed SSH or Telnet port gets hammered around the clock by botnets guessing logins. I run [Cowrie](https://github.com/cowrie/cowrie) and various other honeypots that let them try, and this repo holds what they tried.
+I operate Cowrie honeypots and collect the login guesses they receive. Beeswax makes those observations available as portable wordlists for authorized security testing, password-blocklist evaluation, and comparison with other honeypot datasets.
 
-These aren't leaked passwords and they aren't made up. They're the dictionaries attackers are using **right now**, as observed on the wire. That makes them useful for:
+These are observed inputs, not evidence of valid accounts or successful compromises. The collection is not a breach dump, although submitted guesses may overlap with passwords found elsewhere.
 
-- **Defenders** auditing their own systems and password-block policies against what bots actually try first
-- **Researchers** tracking how attacker wordlists shift over time
-- **Honeypot operators** comparing against their own sensors
-- **Tool authors** who need a realistic, current corpus
+## Download
 
-> Beeswax is what the hive builds the honeycomb from. If you analyze honeypot logs, see also **[HONEYCOMB](https://github.com/really-gabagool)**.
-
-## Contents
-
-| File | Entries | Description |
-|---|---:|---|
-| [`captured_passwords.txt`](captured_passwords.txt) | 35,584 | Every unique password attempted |
-| [`captured_usernames.txt`](captured_usernames.txt) | 995 | Every unique username attempted |
-
-- One entry per line, **UTF-8**, **LF** line endings, no duplicates
-- Ordered by how often each entry was tried, so the top of each file is what bots reach for first
-- Non-English entries (Cyrillic, Arabic, Korean, Chinese) are kept as real UTF-8 text, not escaped bytes
-- Removed suspected canaries 
-
-## Collection
-
-| | |
+| File | Description |
 |---|---|
-| **Sensors** | Cowrie (SSH + Telnet), multiple cloud VPS nodes across North America and Asia |
-| **Collection window** | `10/31/26` → `11/12/26` |
-| **Update cadence** | Roughly monthly, tagged by date (`11/26`, `12/26`, …) |
+| [captured_passwords.txt](captured_passwords.txt) | Unique observed password values |
+| [captured_usernames.txt](captured_usernames.txt) | Unique observed username values |
+| [stats.md](stats.md) | Generated counts, composition, length statistics, and SHA-256 hashes |
 
-### Cleaning
+Both wordlists use UTF-8, LF line endings, and one case-sensitive entry per line. There are no duplicate or empty entries. Meaningful spaces are retained, including leading or trailing spaces.
 
-Raw honeypot logs are messy. Before publishing, every list goes through:
+**Ordering:** the current snapshot retains its inherited order. Historical attempt counts are not included, so its frequency ranking and the traffic coverage of any prefix cannot be independently verified. The build tool orders new candidates by retained attempt count, with Unicode lexical ordering to break ties.
 
-- **Protocol noise removed.** Scanners hit Telnet with all kinds of non-login traffic that Cowrie dutifully logs as "passwords": TLS ClientHellos, HTTP `GET` requests, SIP `OPTIONS` probes, MongoDB handshakes, even a bot's `command -v curl wget busybox` recon one-liner. None of that belongs in a wordlist.
-- **Byte escapes decoded.** Cowrie logs non-ASCII input as `\xd0\xb9…`. Valid UTF-8 is decoded back to readable text (e.g. `12345678йцукен`); undecodable binary junk is dropped.
-- **Control characters stripped.** Trailing `\x00`, tabs, BOMs, and CRLF endings.
-- **Sensor identifiers scrubbed.** Anything that could point back to the honeypots themselves.
-- **Deduplicated.**
+## Collection and limitations
 
-## By the numbers
+| Item | Current snapshot |
+|---|---|
+| Collector | Cowrie SSH/Telnet honeypots |
+| Operator-reported deployment | Multiple cloud VPS nodes across North America and Asia |
+| Operator-reported collection dates | 2026-10-31 through 2026-11-12 |
+| Historical timestamp precision and timezone | Not supplied with the published lists |
+| Historical frequencies, source counts, and sensor counts | Not available in this snapshot |
+| Planned cadence | Roughly monthly; use date tags such as `2026-11-12` |
 
-**Passwords**
+The raw collection provenance is operator-reported. File validation confirms the published bytes and statistics; it does not independently verify their origin. These observations represent this deployment and collection window, not the whole internet. A single high-volume source can dominate attempt counts. Sensor acceptance of a guess does not demonstrate a real-world compromise.
 
-| | |
-|---|---:|
-| Median length | 8 chars |
-| 8 characters or fewer | 79.2% |
-| Digits only | 28.0% |
-| Lowercase letters only | 41.3% |
-| Contain a year (19xx / 20xx) | 18.1% |
-| Contain any special character | 8.3% |
+## What the usernames suggest
 
-The headline: nearly four out of five attempts are eight characters or shorter, and over a quarter are nothing but digits. A modern length-and-complexity policy blocks the overwhelming majority of this traffic outright.
+The list includes technology-themed guesses, including:
 
-**Top 15 passwords:** `password` `admin` `12345` `123456` `123` `111111` `root` `1234` `123123` `12345678` `123456789` `123321` `support` `1234567` `qwerty`
+- **AI tools:** `claude`, `openclaw`, `clawdbot`, `cursor`, `codex`, `deepseek`, `kimi`, `aiuser`, `aibox`.
+- **Cryptocurrency infrastructure:** `solana`, `jito`, `firedancer`, `shredstream`, `blockscout`, `eth-validator`, `validator`, `miner`.
+- **Self-hosted applications:** `frappe`, `n8n`, `airflow`, `gitlab-runner`, `zabbix`, `grafana`.
+- **Embedded devices:** `ubnt`, `pi`, `orangepi`, `jetson`, `telecomadmin`.
 
-**Top 15 usernames:** `username` `admin` `root` `support` `test` `user` `ftpuser` `ubuntu` `dev` `ubnt` `data` `frappe` `demo` `pi` `kafka`
+These names are consistent with dictionaries containing technology-related account guesses. They do not establish a targeted campaign, the technology present on a victim, exploitation, or attacker identity. Separately published username and password lists also do not preserve attempted pairs.
 
-## What the usernames reveal
+## Using the data
 
-The username list is small but tells a story about what attackers expect to find exposed:
+- Compare it with guesses received by your own sensors.
+- Evaluate password-blocklist coverage and test accounts in authorized environments.
+- Use recurring account names as context for monitoring; a username alone is not an indicator of compromise.
 
-- **AI-agent boxes.** `claude`, `openclaw`, `clawdbot`, `cursor`, `codex`, `deepseek`, `kimi`, `aiuser`, `aibox` — machines set up to run AI coding agents and self-hosted LLMs.
-- **Crypto infrastructure.** `solana`, `jito`, `firedancer`, `shredstream`, `blockscout`, `eth-validator`, `eigenlayer`, `validator`, `miner`, plus GPU-rental hosts `vastai` and `clore`.
-- **Self-hosted app defaults.** `odoo` through `odoo18`, `frappe` / `erpnext`, `n8n`, `airflow`, `gitlab-runner`, `github-runner`, `zabbix`, `grafana`, `elastic`, `dolphinscheduler`.
-- **Game servers.** `minecraft`, `teamspeak` / `ts3`, `steam`, `factorio`, `palworld`, `arma3server`, `fivem`.
-- **IoT / embedded defaults.** `ubnt`, `pi`, `orangepi`, `radxa`, `odroid`, `jetson`, `AdminGPON`, `telecomadmin`, `xc3511`, `vstarcam2015`, `moxa`.
+See [generated statistics](stats.md) for the dictionary's composition. Unique-entry percentages must not be reported as percentages of login attempts. These lists cannot quantify authentication success or how much traffic a password policy would prevent.
 
-## Using it defensively
+## Reproduce and maintain
 
-The most useful thing here is the frequency ordering. A short prefix of each list (say the first few hundred lines) accounts for most of the attack volume, so it's a practical set to:
+Python 3.10 or newer; standard library only. No network requests or external dependencies.
 
-- feed into a password-blocklist or filter so your users can't pick anything on it
-- check your own accounts against, to confirm none match
-- prioritize monitoring and lockout rules around the usernames bots probe most
+```sh
+python tools/beeswax.py validate
+python tools/beeswax.py stats
+python -m unittest discover -s tests -v
+```
 
-## ⚠️ Responsible use
+To process your own **Cowrie JSONL** exports into a separate local candidate directory:
 
-These lists are published for **defense and research**. If you use them for security testing, only do so against systems you own or have explicit written permission to test. Unauthorized access to computer systems is illegal in most jurisdictions.
+```sh
+python tools/beeswax.py build raw/cowrie.json raw/cowrie.json.2026-11-11 --out scratch/candidates --exclude-file raw/private-exclusions.txt
+python tools/beeswax.py stats --root scratch/candidates
+```
+
+Create the private exclusions file first, with one literal, case-sensitive substring per line: sensor IPs, hostnames, personal identifiers, and suspected canary values you want excluded. Blank lines are ignored; there is no comment syntax. An empty file is accepted but adds no operator-specific filtering.
+
+The output includes wordlists, per-value metadata CSVs, and aggregate rejection counters. **Review candidates before publication.** Automated filtering does not guarantee removal of every identifier, canary, or protocol artifact. CSV values are untrusted attacker input; import value columns as text with spreadsheet formula execution disabled.
+
+See [METHODOLOGY.md](METHODOLOGY.md) for event selection, deduplication, normalization, privacy limitations, and metadata definitions. New processing rules do not retroactively establish how the original snapshot was cleaned.
+
+## Contributing and responsible use
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Use these lists only against systems you own or have explicit permission to test. Do not contribute breach dumps, invented entries, or private identifiers.
 
 ## License
 
-Released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Use it however you like, just credit **beeswax by [@really-gabagool](https://github.com/really-gabagool)**.
+Released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Credit **beeswax by [@really-gabagool](https://github.com/really-gabagool)**. See [LICENSE.md](LICENSE.md).
 
 ## Related
 
-- [Cowrie](https://github.com/cowrie/cowrie) — the SSH/Telnet honeypot behind the data
-- [SecLists](https://github.com/danielmiessler/SecLists) — the classic collection of security wordlists
-- More of my honeypot and ICS tooling: [github.com/really-gabagool](https://github.com/really-gabagool)
+- [Cowrie](https://github.com/cowrie/cowrie) — the collection software
+- [SecLists](https://github.com/danielmiessler/SecLists) — a broader security wordlist collection
+- [My GitHub projects](https://github.com/really-gabagool) — honeypot and analysis tooling
