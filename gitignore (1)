@@ -1,0 +1,27 @@
+# Raw honeypot logs — never commit these (they contain sensor identifiers)
+*.log
+*.json
+cowrie/
+raw/
+logs/
+dump/
+
+# Cleaning / build scripts working files
+*.tmp
+*.bak
+*_raw.txt
+scratch/
+
+# Python (if you keep build tooling in-repo)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
