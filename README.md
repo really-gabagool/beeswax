@@ -32,8 +32,8 @@ These aren't leaked passwords and they aren't made up. They're the dictionaries 
 
 | File | Entries | Description |
 |---|---:|---|
-| [`bot_passwords.txt`](bot_passwords.txt) | 35,584 | Every unique password attempted |
-| [`bot_usernames.txt`](bot_usernames.txt) | 995 | Every unique username attempted |
+| [`captured_passwords.txt`](captured_passwords.txt) | 35,584 | Every unique password attempted |
+| [`captured_usernames.txt`](captured_usernames.txt) | 995 | Every unique username attempted |
 
 - One entry per line, **UTF-8**, **LF** line endings, no duplicates
 - Ordered by how often each entry was tried, so the top of each file is what bots reach for first
