@@ -1,4 +1,4 @@
-# beeswax - full breakdown
+# Beeswax - full breakdown
 
 Stats for the current release. Counts are over **unique** entries, not raw attempts.
 
