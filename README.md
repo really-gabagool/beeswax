@@ -32,12 +32,13 @@ These aren't leaked passwords and they aren't made up. They're the dictionaries 
 
 | File | Entries | Description |
 |---|---:|---|
-| [`bot_passwords.txt`](bot_passwords.txt) | 35,585 | Every unique password attempted |
+| [`bot_passwords.txt`](bot_passwords.txt) | 35,584 | Every unique password attempted |
 | [`bot_usernames.txt`](bot_usernames.txt) | 995 | Every unique username attempted |
 
 - One entry per line, **UTF-8**, **LF** line endings, no duplicates
 - Ordered by how often each entry was tried, so the top of each file is what bots reach for first
 - Non-English entries (Cyrillic, Arabic, Korean, Chinese) are kept as real UTF-8 text, not escaped bytes
+- Removed suspected canaries 
 
 ## Collection
 
@@ -45,7 +46,7 @@ These aren't leaked passwords and they aren't made up. They're the dictionaries 
 |---|---|
 | **Sensors** | Cowrie (SSH + Telnet), multiple cloud VPS nodes across North America and Asia |
 | **Collection window** | `10/31/26` → `11/12/26` |
-| **Update cadence** | Roughly monthly, tagged by date (`2026-11`, `2026-12`, …) |
+| **Update cadence** | Roughly monthly, tagged by date (`11/26`, `12/26`, …) |
 
 ### Cleaning
 
